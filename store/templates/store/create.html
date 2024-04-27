@@ -1,0 +1,91 @@
+{% extends 'store/layout.html' %}
+
+
+{% block title %}Amazon{% endblock %}
+
+{% block content %}
+<nav class="navbar navbar-expand-lg bg-body-tertiary">
+  <div class="container-fluid">
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav">
+          <a class="navbar-brand" href="{% url 'home' %}">Amazon</a>
+        <li class="nav-item searchbar">
+          <form action="{% url 'home' %}" method="GET">
+            <select name="options" id="">
+              <option value="">All</option>
+              {% for el in categories %}
+              <option value="{{el.id}}">{{el.name}}</option>
+              {% endfor %}
+            </select>
+          <input type="search" class="nav-link nav-search" placeholder="search items ... " name="title">
+          <button type="submit">search</button>
+          </form>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'create' %}" >Create</a>
+        </li>
+        <ul class="register">
+          <li class="nav-item">
+              <a class="nav-link" href="{% url 'register' %}" >Register</a>
+            </li>
+          <li class="nav-item">
+              <a class="nav-link" href="{% url 'login' %}">Login</a>
+          </li>
+        </ul>
+                  
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<div class="container text-center">
+<div class="row-form">
+  
+  <form action="{% url 'create' %}" method="post" class="create-form" enctype="multipart/form-data">
+    {% csrf_token %}
+    <!-- {{form.as_p}} -->
+    
+    <div class="form-error">{{form.non_field_errors}}</div>
+
+    {% for f in form %}
+      <p><label class="form-label" for="{{f.id_for_label}}">{{f.label}}</label>{{f}}</p>
+    {% endfor %}
+    
+    <!-- <input class="form-control" type="file" name="image">
+    <input class="form-control" type="text" placeholder="title" name="title">
+    <textarea class="form-control" name="content" id="" cols="30" rows="10" placeholder="description ..."></textarea>
+    <input class="form-control" type="number" name="price" placeholder="price">
+    <input class="form-control" type="number" name="rating" placeholder="rating">
+    <select class="form-control" name="category" id="">
+      {% for op in cats %}
+      <option value="{{op.id}}">{{op}}</option>
+      {% endfor %}
+    </select>
+    <select class="form-control" name="tags" id="" multiple>
+      {% for tag in tags %}
+      <option value="{{tag.id}}">{{tag}}</option>
+      {% endfor %}
+    </select> -->
+
+    <button class="btn btn-info form-control" type="submit">Create</button>
+
+  </form>
+
+</div>
+
+</div>
+
+<footer>
+    <div class="footer-content container">
+        <ul class="footer__list">
+            <li class="footer__list-item"><a href="">Amazon</a></li>
+            <li class="footer__list-item"><a href="">About</a></li>
+            <li class="footer__list-item"><a href="">Contact</a></li>
+        </ul>
+    </div>
+</footer>
+
+{% endblock %}
